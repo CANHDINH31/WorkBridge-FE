@@ -1,0 +1,1 @@
+scp -r .next root@154.26.132.200:/var/www/html/shinro_hiroba_proto/career_guidance_fe

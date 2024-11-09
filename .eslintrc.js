@@ -1,0 +1,68 @@
+const { resolve } = require('node:path');
+
+const project = resolve(__dirname, 'tsconfig.json');
+
+module.exports = {
+  root: true,
+  extends: [
+    require.resolve('@vercel/style-guide/eslint/node'),
+    require.resolve('@vercel/style-guide/eslint/typescript'),
+    require.resolve('@vercel/style-guide/eslint/browser'),
+    require.resolve('@vercel/style-guide/eslint/react'),
+    require.resolve('@vercel/style-guide/eslint/next'),
+  ],
+  plugins: ['@typescript-eslint/eslint-plugin', 'eslint-plugin-tsdoc'],
+  parserOptions: {
+    project,
+  },
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project,
+      },
+    },
+  },
+  rules: {
+    'eslint-comments/require-description': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unnecessary-type-arguments': 'off',
+    '@typescript-eslint/dot-notation': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-unnecessary-condition': 'off',
+    '@typescript-eslint/require-await': 'off',
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    '@typescript-eslint/prefer-promise-reject-errors': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    'import/no-cycle': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/consistent-type-imports': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-shadow': 'off',
+    '@next/next/no-img-element': 'off',
+    'import/newline-after-import': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'unicorn/filename-case': 'off',
+    'prefer-promise-reject-errors': 'off',
+    'import/no-default-export': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'import/order': 'off',
+    'no-nested-ternary': 'off',
+    'no-redeclare': 'off',
+    'tsdoc/syntax': 'off',
+    'react/jsx-fragments': 'off',
+    'react/prop-types': 'off',
+    'no-alert': 'off',
+    '@typescript-eslint/naming-convention': 'off',
+    'no-unused-vars': 'off',
+    'no-undef': 'off',
+    'no-console': 'off',
+  },
+};
