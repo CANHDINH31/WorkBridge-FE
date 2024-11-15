@@ -8,6 +8,9 @@ export default function HomeRight(props: Props) {
   return (
     <Stack gap={2}>
       <AddYourFeed />
+      <Hiring />
+      <Try />
+      <Footer />
     </Stack>
   );
 }
@@ -96,5 +99,76 @@ function AddYourFeed() {
         </Box>
       </Stack>
     </Paper>
+  );
+}
+
+function Hiring() {
+  return (
+    <Box
+      component="img"
+      src="https://media.licdn.com/media/AAYQAgTPAAgAAQAAAAAAADVuOvKzTF-3RD6j-qFPqhubBQ.png"
+      width="100%"
+      sx={{ objectFit: 'contain', borderRadius: '8px' }}
+    />
+  );
+}
+
+function Try() {
+  return (
+    <Paper elevation={1} sx={{ width: '100%', bgcolor: '#fff', padding: '16px 12px' }}>
+      <Box display="flex" alignItems="center" gap={1}>
+        <Box bgcolor="#fce3dc" fontSize={14} fontWeight={500} padding={0.2} borderRadius="2px">
+          TIP
+        </Box>
+        <Typography fontSize={12} color="#666" fontWeight={500}>
+          Try LinkedIn on the Windows App
+        </Typography>
+      </Box>
+    </Paper>
+  );
+}
+
+function Footer() {
+  return (
+    <Stack gap={1}>
+      <Box display="flex" justifyContent="space-evenly">
+        <Typography fontSize="12px" fontWeight={500} color="#666">
+          About
+        </Typography>
+        <Typography fontSize="12px" fontWeight={500} color="#666">
+          Accessibility
+        </Typography>
+        <Typography fontSize="12px" fontWeight={500} color="#666">
+          Help Center
+        </Typography>
+      </Box>
+      <Box display="flex" justifyContent="space-evenly">
+        <Typography fontSize="12px" fontWeight={500} color="#666">
+          Privacy & Terms
+        </Typography>
+        <Typography fontSize="12px" fontWeight={500} color="#666">
+          Ad Choices
+        </Typography>
+      </Box>
+      <Box display="flex" justifyContent="space-evenly">
+        <Typography fontSize="12px" fontWeight={500} color="#666">
+          Advertising
+        </Typography>
+        <Typography fontSize="12px" fontWeight={500} color="#666">
+          Business Services
+        </Typography>
+      </Box>
+      <Box display="flex" justifyContent="space-evenly">
+        <Typography fontSize="12px" fontWeight={500} color="#666">
+          Get the LinkedIn app
+        </Typography>
+        <Typography fontSize="12px" fontWeight={500} color="#666">
+          More
+        </Typography>
+      </Box>
+      <Typography fontWeight={500} fontSize={14} color="#666" mt={2} textAlign="center">
+        LinkedIn Corporation © 2024
+      </Typography>
+    </Stack>
   );
 }
