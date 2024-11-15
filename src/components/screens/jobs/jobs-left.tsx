@@ -1,6 +1,6 @@
 import React from 'react';
-import { PlusIcon } from '@heroicons/react/24/outline';
-import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material';
+import { DocumentChartBarIcon, PaperAirplaneIcon, PlusIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import { Box, Button, Paper, Stack, Typography } from '@mui/material';
 
 interface Props {}
 
@@ -8,6 +8,7 @@ export default function JobsLeft(props: Props) {
   return (
     <Stack gap={2}>
       <Genneral />
+      <Setting />
     </Stack>
   );
 }
@@ -61,6 +62,33 @@ function Genneral() {
           Experience
         </Button>
       </Box>
+    </Paper>
+  );
+}
+
+function Setting() {
+  return (
+    <Paper elevation={1} sx={{ width: '100%', paddingY: '16px', paddingX: '12px' }}>
+      <Stack gap={4}>
+        <Box display="flex" alignItems="center" gap={0.5}>
+          <DocumentChartBarIcon height={20} />
+          <Typography fontSize={14} fontWeight={500}>
+            Preferences
+          </Typography>
+        </Box>
+        <Box display="flex" alignItems="center" gap={0.5}>
+          <UserGroupIcon height={20} />
+          <Typography fontSize={14} fontWeight={500}>
+            My Jobs
+          </Typography>
+        </Box>
+        <Box display="flex" alignItems="center" gap={0.5}>
+          <PaperAirplaneIcon height={20} />
+          <Typography fontSize={14} fontWeight={500}>
+            Interview prep
+          </Typography>
+        </Box>
+      </Stack>
     </Paper>
   );
 }
