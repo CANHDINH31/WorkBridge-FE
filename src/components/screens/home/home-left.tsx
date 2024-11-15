@@ -34,16 +34,16 @@ function Genneral() {
           left="50%"
           position="absolute"
           border="2px solid #fff"
-          width={52}
-          height={52}
+          width={72}
+          height={72}
           borderRadius="50%"
           display="flex"
           justifyContent="center"
           alignItems="center"
         >
           <Box
-            width={50}
-            height={50}
+            width={70}
+            height={70}
             borderRadius="50%"
             component="img"
             src="https://media.licdn.com/dms/image/v2/D4D03AQHt-5xaPvavOw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1703069041306?e=1736985600&v=beta&t=kJuH_aqS8tY9IC3yIvErOTYcE5KRs3Af5VhtxMzUrwo"
