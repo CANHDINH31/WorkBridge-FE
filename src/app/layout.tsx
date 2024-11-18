@@ -10,7 +10,6 @@ import { UserProvider } from '@/contexts/user-context/user-provider';
 import { LocalizationProvider } from '@/components/core/localization-provider';
 import { ReactQueryClientProvider } from '@/components/core/react-query-client-provider';
 import { ThemeProvider } from '@/components/core/theme-provider/theme-provider';
-import { MainLayout } from '@/components/layout/main/main-layout';
 
 export const viewport = { width: 'device-width', initialScale: 1 } satisfies Viewport;
 
@@ -25,9 +24,7 @@ export default function Layout({ children }: ILayoutProps): React.JSX.Element {
         <LocalizationProvider>
           <ReactQueryClientProvider>
             <UserProvider>
-              <ThemeProvider>
-                <MainLayout>{children}</MainLayout>
-              </ThemeProvider>
+              <ThemeProvider>{children}</ThemeProvider>
               <Toaster />
             </UserProvider>
             <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
