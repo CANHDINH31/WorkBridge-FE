@@ -18,11 +18,12 @@ export default function Page(): React.JSX.Element {
           <Paper elevation={3}>
             <Box padding={3} width="350px">
               <Typography fontSize={32} fontWeight={600}>
-                Đăng nhập
+                Đăng kí
               </Typography>
-              <Typography fontSize={12}>Luôn cập nhật về thế giới nghề nghiệp của bạn.</Typography>
+              <Typography fontSize={12}>Tận dụng tối đa cuộc sống nghề nghiệp của bạn.</Typography>
               <Box mt={4}>
-                <TextField fullWidth size="medium" placeholder="Email" />
+                <TextField fullWidth size="medium" placeholder="Name" />
+                <TextField fullWidth size="medium" placeholder="Email" sx={{ mt: 2 }} />
                 <TextField
                   fullWidth
                   size="medium"
@@ -38,42 +39,25 @@ export default function Page(): React.JSX.Element {
                   }}
                 />
               </Box>
-              <Typography mt={2} color="#0073b1" fontSize={14} fontWeight={600}>
-                Quên mật khẩu ?
+              <Typography fontSize={12} mt={2}>
+                Khi nhấp vào Đồng ý và tham gia hoặc Tiếp tục, bạn đồng ý với Thỏa thuận người dùng, Chính sách quyền
+                riêng tư và Chính sách cookie của LinkedIn. Đồng ý và tham gia
               </Typography>
               <Box mt={2}>
                 <Button variant="contained" fullWidth size="large" color="info">
-                  Đăng nhập
+                  Đăng kí
                 </Button>
               </Box>
-              <Box mt={2} />
-              <Divider>
-                <Typography fontSize={14} color="#666">
-                  hoặc
-                </Typography>
-              </Divider>
-              <Typography fontSize={12} mt={2}>
-                Khi nhấp vào Tiếp tục, bạn đồng ý với Thỏa thuận người dùng, Chính sách quyền riêng tư và Chính sách
-                cookie của LinkedIn.
-              </Typography>
-              <Box mt={2}>
-                <Button fullWidth variant="contained" size="large" color="error">
-                  Đăng nhập với Google
-                </Button>
-                <Button fullWidth variant="contained" size="large" sx={{ mt: 1 }}>
-                  Đăng nhập với Facebook
-                </Button>
+              <Box mt={2} display="flex" justifyContent="center" gap={1}>
+                <Typography fontSize={14}>Bạn chưa có tài khoản?</Typography>
+                <Link href={paths.auth.signIn}>
+                  <Typography fontSize={14} fontWeight={600} color="primary" sx={{ textDecoration: 'none' }}>
+                    Đăng nhập
+                  </Typography>
+                </Link>
               </Box>
             </Box>
           </Paper>
-          <Box mt={2} display="flex" justifyContent="center" gap={1}>
-            <Typography fontSize={14}>Bạn chưa có tài khoản?</Typography>
-            <Link href={paths.auth.signUp}>
-              <Typography fontSize={14} fontWeight={600} color="primary" sx={{ textDecoration: 'none' }}>
-                Tham gia
-              </Typography>
-            </Link>
-          </Box>
         </Stack>
       </Box>
     </AuthLayout>
