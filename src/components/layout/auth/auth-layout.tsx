@@ -1,10 +1,17 @@
 import * as React from 'react';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 export interface ILayoutProps {
   children: React.ReactNode;
 }
 
 export function AuthLayout({ children }: ILayoutProps): React.JSX.Element {
-  return <Box minHeight="100vh">{children}</Box>;
+  return (
+    <Container>
+      <Box py={2}>
+        <Box component="img" src="/images/logo.jpg" height={60} sx={{ objectFit: 'cover' }} />
+        {children}
+      </Box>
+    </Container>
+  );
 }
