@@ -1,15 +1,13 @@
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { gender, type } from '@/utilities/contants';
 import { EyeIcon } from '@heroicons/react/24/outline';
-import { DatePicker } from '@mui/lab';
 import {
   Box,
   Button,
-  Divider,
   FormControl,
   FormControlLabel,
-  FormLabel,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -58,25 +56,32 @@ export default function Page(): React.JSX.Element {
                 />
                 <TextField fullWidth size="medium" placeholder="Phone" sx={{ mt: 1 }} />
                 <FormControl fullWidth sx={{ mt: 1 }}>
-                  <InputLabel id="role">Role</InputLabel>
+                  <InputLabel id="type">Type</InputLabel>
                   <Select
-                    labelId="role"
-                    id="demo-simple-select"
+                    labelId="type"
+                    id="type"
                     // value={age}
-                    label="role"
+                    label="type"
                     // onChange={handleChange}
                   >
-                    <MenuItem value="1">Buyer</MenuItem>
-                    <MenuItem value="2">Seller</MenuItem>
-                    <MenuItem value="3">Broker</MenuItem>
+                    {type.map((t) => (
+                      <MenuItem key={t.value} value={t.value}>
+                        {t.label}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
 
                 <FormControl sx={{ mt: 1 }}>
                   <RadioGroup row aria-labelledby="gender" name="gender">
-                    <FormControlLabel value="female" control={<Radio size="small" />} label="Female" />
-                    <FormControlLabel value="male" control={<Radio size="small" />} label="Male" />
-                    <FormControlLabel value="other" control={<Radio size="small" />} label="Other" />
+                    {gender.map((g) => (
+                      <FormControlLabel
+                        key={g.value}
+                        value={g.value}
+                        control={<Radio size="small" />}
+                        label={g.label}
+                      />
+                    ))}
                   </RadioGroup>
                 </FormControl>
               </Box>
