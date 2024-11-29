@@ -123,7 +123,7 @@ function Try() {
           TIP
         </Box>
         <Typography fontSize={12} color="#666" fontWeight={500}>
-          Try LinkedIn on the Windows App
+          Try WorkBridge on the Windows App
         </Typography>
       </Box>
     </Paper>

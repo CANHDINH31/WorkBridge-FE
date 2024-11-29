@@ -32,14 +32,14 @@ export default function Footer() {
       </Box>
       <Box display="flex" justifyContent="space-evenly">
         <Typography fontSize="12px" fontWeight={500} color="#666">
-          Get the LinkedIn app
+          Get the WorkBridge app
         </Typography>
         <Typography fontSize="12px" fontWeight={500} color="#666">
           More
         </Typography>
       </Box>
       <Typography fontWeight={500} fontSize={14} color="#666" mt={2} textAlign="center">
-        LinkedIn Corporation © 2024
+        WorkBridge Corporation © 2024
       </Typography>
     </Stack>
   );

@@ -161,7 +161,7 @@ export default function SignUpView(): React.JSX.Element {
 
                 <Typography fontSize={12} mt={2}>
                   Khi nhấp vào Đồng ý và tham gia hoặc Tiếp tục, bạn đồng ý với Thỏa thuận người dùng, Chính sách quyền
-                  riêng tư và Chính sách cookie của LinkedIn. Đồng ý và tham gia
+                  riêng tư và Chính sách cookie của WorkBridge. Đồng ý và tham gia
                 </Typography>
                 <Box mt={2}>
                   <Button variant="contained" fullWidth size="large" color="info" type="submit">

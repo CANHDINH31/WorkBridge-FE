@@ -54,7 +54,7 @@ export default function SignInView(): React.JSX.Element {
               </Divider>
               <Typography fontSize={12} mt={2}>
                 Khi nhấp vào Tiếp tục, bạn đồng ý với Thỏa thuận người dùng, Chính sách quyền riêng tư và Chính sách
-                cookie của LinkedIn.
+                cookie của WorkBridge.
               </Typography>
               <Box mt={2}>
                 <Button fullWidth variant="contained" size="large" color="error">
