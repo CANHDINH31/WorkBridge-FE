@@ -8,9 +8,23 @@ export interface ISignInParams {
   password: string;
 }
 
+export interface ISignUpParams {
+  email: string;
+  password: string;
+  name: string;
+  gender?: string;
+  phone?: string;
+  type?: string;
+}
+
 export interface ISignInResponse {
   user: IUserResponse;
   token: string;
+}
+
+export interface ISignUpResponse {
+  message: string;
+  status: number;
 }
 
 interface IUserResponse {

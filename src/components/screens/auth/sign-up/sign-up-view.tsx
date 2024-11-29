@@ -3,8 +3,9 @@
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { gender, type } from '@/utilities/contants';
-import { EyeIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import {
   Box,
   Button,
@@ -21,24 +22,44 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { Controller, FieldValues, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
+import { ISignUpParams } from '@/types';
 import { config } from '@/config';
 import { paths } from '@/paths';
+import { authService } from '@/lib/api';
 import { AuthLayout } from '@/components/layout/auth/auth-layout';
 
 export const metadata = { title: `Sign Up | ${config.site.name}` } satisfies Metadata;
 
 export default function SignUpView(): React.JSX.Element {
+  const router = useRouter();
+  const [isHidePw, setIsHidePw] = React.useState<boolean>(true);
+
   const {
     handleSubmit,
     control,
     register,
     formState: { errors },
+    reset,
   } = useForm();
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: authService.signUp,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      reset();
+      router.push('/auth/sign-in');
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    mutate(data as ISignUpParams);
   };
 
   return (
@@ -82,12 +103,19 @@ export default function SignUpView(): React.JSX.Element {
                     fullWidth
                     size="medium"
                     placeholder="Password"
-                    type="password"
+                    type={isHidePw ? 'password' : 'text'}
                     sx={{ mt: 2 }}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <EyeIcon height={18} />
+                          <Box
+                            onClick={() => {
+                              setIsHidePw(!isHidePw);
+                            }}
+                            sx={{ cursor: 'pointer' }}
+                          >
+                            {isHidePw ? <EyeSlashIcon height={18} /> : <EyeIcon height={18} />}
+                          </Box>
                         </InputAdornment>
                       ),
                     }}
@@ -164,7 +192,7 @@ export default function SignUpView(): React.JSX.Element {
                   riêng tư và Chính sách cookie của WorkBridge. Đồng ý và tham gia
                 </Typography>
                 <Box mt={2}>
-                  <Button variant="contained" fullWidth size="large" color="info" type="submit">
+                  <Button variant="contained" fullWidth size="large" color="info" type="submit" disabled={isPending}>
                     Đăng kí
                   </Button>
                 </Box>

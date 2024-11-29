@@ -1,6 +1,6 @@
 import Axios, { AxiosRequestConfig } from 'axios';
 
-const baseURL = process.env.NEXT_PUBLIC_DOMAIN_API;
+const baseURL = `${process.env.NEXT_PUBLIC_DOMAIN_API}/api`;
 
 const authRequestInterceptor = (config: AxiosRequestConfig): AxiosRequestConfig<any> => {
   const _token = localStorage.getItem('access_token');
