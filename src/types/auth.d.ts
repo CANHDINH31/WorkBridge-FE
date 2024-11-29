@@ -18,8 +18,8 @@ export interface ISignUpParams {
 }
 
 export interface ISignInResponse {
-  user: IUserResponse;
-  token: string;
+  data: IUserResponse;
+  message: string;
 }
 
 export interface ISignUpResponse {
@@ -35,4 +35,5 @@ interface IUserResponse {
   user_name: string;
   created_at: string;
   updated_at: string;
+  token: string;
 }

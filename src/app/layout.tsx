@@ -3,10 +3,11 @@ import type { Viewport } from 'next';
 
 import '@/styles/global.css';
 
+import { getServerAuthSession } from '@/server/auth';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
 
-import { UserProvider } from '@/contexts/user-context/user-provider';
+import NextAuthProvider from '@/contexts/next-auth-provider';
 import { LocalizationProvider } from '@/components/core/localization-provider';
 import { ReactQueryClientProvider } from '@/components/core/react-query-client-provider';
 import { ThemeProvider } from '@/components/core/theme-provider/theme-provider';
@@ -17,18 +18,20 @@ interface ILayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: ILayoutProps): React.JSX.Element {
+export default async function Layout({ children }: ILayoutProps): Promise<React.JSX.Element> {
+  const session = await getServerAuthSession();
+
   return (
     <html lang="en">
       <body>
         <LocalizationProvider>
-          <ReactQueryClientProvider>
-            <UserProvider>
+          <NextAuthProvider session={session}>
+            <ReactQueryClientProvider>
               <ThemeProvider>{children}</ThemeProvider>
               <Toaster />
-            </UserProvider>
-            <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
-          </ReactQueryClientProvider>
+              <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
+            </ReactQueryClientProvider>
+          </NextAuthProvider>
         </LocalizationProvider>
       </body>
     </html>

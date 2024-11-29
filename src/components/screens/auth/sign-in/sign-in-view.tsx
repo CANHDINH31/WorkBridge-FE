@@ -1,51 +1,118 @@
+'use client';
+
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { EyeIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Box, Button, Divider, InputAdornment, Paper, Stack, TextField, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { signIn } from 'next-auth/react';
+import { FieldValues, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
+import { ISignInParams } from '@/types';
 import { config } from '@/config';
 import { paths } from '@/paths';
+import { authService } from '@/lib/api';
 import { AuthLayout } from '@/components/layout/auth/auth-layout';
 
 export const metadata = { title: `Sign In | ${config.site.name}` } satisfies Metadata;
 
 export default function SignInView(): React.JSX.Element {
+  const router = useRouter();
+  const [isHidePw, setIsHidePw] = React.useState<boolean>(true);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: authService.signIn,
+    onSuccess: async (res) => {
+      toast.success(res.message);
+      await signIn('credentials', { token: res.data.token, redirect: false });
+
+      // reset();
+      // router.push('/');
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubmit = (data: FieldValues) => {
+    mutate(data as ISignInParams);
+  };
+
   return (
     <AuthLayout>
       <Box display="flex" justifyContent="center" alignItems="center">
         <Stack>
           <Paper elevation={3}>
             <Box padding={3} width="350px">
-              <Typography fontSize={32} fontWeight={600}>
-                Đăng nhập
-              </Typography>
-              <Typography fontSize={12}>Luôn cập nhật về thế giới nghề nghiệp của bạn.</Typography>
-              <Box mt={4}>
-                <TextField fullWidth size="medium" placeholder="Email" />
-                <TextField
-                  fullWidth
-                  size="medium"
-                  placeholder="Password"
-                  type="password"
-                  sx={{ mt: 2 }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <EyeIcon height={18} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Box>
-              <Typography mt={2} color="#0073b1" fontSize={14} fontWeight={600}>
-                Quên mật khẩu ?
-              </Typography>
-              <Box mt={2}>
-                <Button variant="contained" fullWidth size="large" color="info">
+              <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                <Typography fontSize={32} fontWeight={600}>
                   Đăng nhập
-                </Button>
+                </Typography>
+                <Typography fontSize={12}>Luôn cập nhật về thế giới nghề nghiệp của bạn.</Typography>
+                <Box mt={4}>
+                  <TextField
+                    fullWidth
+                    size="medium"
+                    placeholder="Email"
+                    {...register('email', {
+                      required: 'Email is required',
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: 'Invalid email address',
+                      },
+                    })}
+                    error={Boolean(errors.email)}
+                    helperText={errors?.email?.message?.toString()}
+                  />
+                  <TextField
+                    fullWidth
+                    size="medium"
+                    placeholder="Password"
+                    type="password"
+                    sx={{ mt: 2 }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Box
+                            onClick={() => {
+                              setIsHidePw(!isHidePw);
+                            }}
+                            sx={{ cursor: 'pointer' }}
+                          >
+                            {isHidePw ? <EyeSlashIcon height={18} /> : <EyeIcon height={18} />}
+                          </Box>
+                        </InputAdornment>
+                      ),
+                    }}
+                    {...register('password', {
+                      required: 'Password is required',
+                      minLength: {
+                        value: 6,
+                        message: 'Password must be at least 6 characters',
+                      },
+                    })}
+                  />
+                </Box>
+                <Typography mt={2} color="#0073b1" fontSize={14} fontWeight={600}>
+                  Quên mật khẩu ?
+                </Typography>
+                <Box mt={2}>
+                  <Button variant="contained" fullWidth size="large" color="info" type="submit" disabled={isPending}>
+                    Đăng nhập
+                  </Button>
+                </Box>
               </Box>
+
               <Box mt={2} />
               <Divider>
                 <Typography fontSize={14} color="#666">
