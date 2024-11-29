@@ -12,19 +12,20 @@ declare module 'next-auth' {
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    // async jwt({ token, user }) {
-    //   if (user) {
-    //     token = user as unknown as JWT;
-    //   }
-    //   return token;
-    // },
-    // async session({ session, token }) {
-    //   if (token) {
-    //     session.token = token.id as string;
-    //     session.info = token.user;
-    //   }
-    //   return session;
-    // },
+    async jwt({ token, user }) {
+      if (user) {
+        // eslint-disable-next-line no-param-reassign
+        token = user as unknown as JWT;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.token = token.id as string;
+        session.info = token.user;
+      }
+      return session;
+    },
   },
 
   pages: {
@@ -38,22 +39,22 @@ export const authOptions: NextAuthOptions = {
   },
 
   providers: [
-    // CredentialsProvider({
-    //   name: 'credentials',
-    //   credentials: {
-    //     token: {},
-    //   },
-    //   async authorize(credentials) {
-    //     if (credentials) {
-    //       const user = verifyJWT(credentials.token, process.env.JWT_SECRET ?? '');
-    //       return {
-    //         id: credentials.token,
-    //         user,
-    //       };
-    //     }
-    //     return null;
-    //   },
-    // }),
+    CredentialsProvider({
+      name: 'credentials',
+      credentials: {
+        data: {},
+      },
+      async authorize(credentials) {
+        if (credentials) {
+          const data = JSON.parse(credentials.data);
+          return {
+            id: data._id,
+            user: data,
+          };
+        }
+        return null;
+      },
+    }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
 };

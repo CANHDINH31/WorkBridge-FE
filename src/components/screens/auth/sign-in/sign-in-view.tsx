@@ -26,11 +26,11 @@ export default function SignInView(): React.JSX.Element {
   const { mutate, isPending } = useMutation({
     mutationFn: authService.signIn,
     onSuccess: async (res) => {
+      const decoded = await authService.verifyToken(res.data.token);
+      await signIn('credentials', { data: JSON.stringify(decoded?.data), redirect: false });
       toast.success(res.message);
-      await signIn('credentials', { token: res.data.token, redirect: false });
-
-      // reset();
-      // router.push('/');
+      reset();
+      router.push('/');
     },
     onError: (err) => {
       toast.error(err.message);
@@ -78,7 +78,7 @@ export default function SignInView(): React.JSX.Element {
                     fullWidth
                     size="medium"
                     placeholder="Password"
-                    type="password"
+                    type={isHidePw ? 'password' : 'text'}
                     sx={{ mt: 2 }}
                     InputProps={{
                       endAdornment: (

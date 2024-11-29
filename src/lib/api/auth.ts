@@ -20,6 +20,16 @@ class AuthService {
       return Promise.reject(error);
     }
   };
+
+  public verifyToken = async (token: string): Promise<ISignInResponse> => {
+    try {
+      const rs = await request.post('/auth/verify-token', { token });
+      return Promise.resolve(rs.data);
+    } catch (error) {
+      console.log(error, 'errorrrrr');
+      return Promise.reject(error);
+    }
+  };
 }
 
 export const authService = new AuthService();

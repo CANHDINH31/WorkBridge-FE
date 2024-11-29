@@ -1,21 +1,20 @@
-import { NextURL } from 'next/dist/server/web/next-url';
 import { NextRequest, NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
-export function middleware(request: NextRequest) {
-  const { pathname }: NextURL = request.nextUrl;
-  const accessToken = request.cookies.get('access_token');
+export async function middleware(request: NextRequest) {
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
 
-  if (pathname.startsWith('/auth')) {
-    if (accessToken) {
-      //  ACTION WHEN HAS ACCESS TOKEN
-    }
-    return NextResponse.next();
+  const { pathname } = request.nextUrl;
+
+  if (token && (pathname === '/auth/sign-in' || pathname === '/auth/sign-up')) {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
-  if (!accessToken) return NextResponse.redirect(new URL('/auth/sign-in', request.url));
   return NextResponse.next();
 }
-
 export const config = {
-  matcher: ['/auth/:path*'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
