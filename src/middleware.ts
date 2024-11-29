@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
+import { paths } from './paths';
+
 export async function middleware(request: NextRequest) {
   const token = await getToken({
     req: request,
@@ -9,7 +11,7 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  if (token && (pathname === '/auth/sign-in' || pathname === '/auth/sign-up')) {
+  if (token && (pathname === paths.auth.signIn || pathname === paths.auth.signUp)) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 

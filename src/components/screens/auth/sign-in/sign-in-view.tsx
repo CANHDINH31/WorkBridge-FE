@@ -4,6 +4,8 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { setToken } from '@/utilities/jwt';
+import { request } from '@/utilities/request';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Box, Button, Divider, InputAdornment, Paper, Stack, TextField, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
@@ -29,6 +31,7 @@ export default function SignInView(): React.JSX.Element {
       const decoded = await authService.verifyToken(res.data.token);
       await signIn('credentials', { data: JSON.stringify(decoded?.data), redirect: false });
       toast.success(res.message);
+      setToken(res.data.token);
       reset();
       router.push('/');
     },
