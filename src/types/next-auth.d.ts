@@ -2,7 +2,7 @@ import 'next-auth';
 
 declare module 'next-auth' {
   interface Session {
-    info: unknown;
+    info: { email: string };
     token: string | null;
   }
 }
