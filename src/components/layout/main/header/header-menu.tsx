@@ -1,15 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { clearToken } from '@/utilities/jwt';
-import {
-  BellAlertIcon,
-  BriefcaseIcon,
-  ChatBubbleLeftEllipsisIcon,
-  HomeIcon,
-  UserGroupIcon,
-} from '@heroicons/react/24/solid';
+import { BellAlertIcon, HomeIcon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { Badge, Box, Button, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { signOut, useSession } from 'next-auth/react';
@@ -23,16 +17,16 @@ interface IMenuItem {
   title: string;
   amount?: number;
   active?: boolean;
+  href?: string;
 }
 
 const listMenu: IMenuItem[] = [
   {
     icon: HomeIcon,
     title: 'Home',
+    href: '/',
   },
-  { icon: UserGroupIcon, title: 'My Network' },
-  { icon: BriefcaseIcon, title: 'Jobs' },
-  { icon: ChatBubbleLeftEllipsisIcon, title: 'Messaging' },
+  { icon: UserGroupIcon, title: 'Transaction', href: '/transaction' },
   { icon: BellAlertIcon, title: 'Notifications', amount: 6 },
 ];
 
@@ -58,14 +52,13 @@ const Item = styled(Stack)({
 function HeaderMenu() {
   const session = useSession();
   const router = useRouter();
+  const pathname = usePathname();
   const [active, setActive] = useState<number>(0);
 
   const handleSignOut = async () => {
     clearToken();
     await signOut();
   };
-
-  console.log(session, 'session');
 
   return (
     // Margin bottom === py of layout
@@ -75,18 +68,18 @@ function HeaderMenu() {
           <Box
             key={Number(index)}
             onClick={() => {
-              setActive(index);
+              router.push(menu?.href ?? '');
             }}
             display="flex"
             flexDirection="column"
             alignItems="center"
             gap="4px"
           >
-            <MenuItem {...menu} active={active === index} />
+            <MenuItem {...menu} active={pathname === menu.href} />
             <Box
               height="2px"
               bgcolor="rgb(0 0 0 / .9)"
-              display={active === index ? 'block' : 'none'}
+              display={pathname === menu.href ? 'block' : 'none'}
               sx={{ width: 'calc(100% + 16px)' }}
             />
           </Box>
