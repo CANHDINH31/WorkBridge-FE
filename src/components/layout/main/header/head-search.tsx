@@ -6,7 +6,7 @@ import { Box, InputAdornment, TextField } from '@mui/material';
 export default function HeadSearch(): React.JSX.Element {
   return (
     <Box display="flex" alignItems="center" gap="6px">
-      <Box component="img" src="/images/logo.png" alt="logo" height={36} sx={{ objectFit: 'contain' }} />
+      <Box component="img" src="/images/logo.jpg" alt="logo" height={36} sx={{ objectFit: 'contain' }} />
       <Search />
     </Box>
   );
