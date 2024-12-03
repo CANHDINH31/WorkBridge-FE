@@ -1,5 +1,6 @@
 'use client';
 
+import { CURRENCY, DISCLOSURE, ROLE } from '@/utilities/contants';
 import {
   Autocomplete,
   Box,
@@ -17,10 +18,22 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
 
 interface Props {}
 
 function TransactionPageView(props: Props) {
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+    reset,
+    watch,
+  } = useForm();
+
+  const role = watch('role') ?? ROLE[0].value;
+
   return (
     <Box width="100%">
       <Paper elevation={3}>
@@ -40,21 +53,50 @@ function TransactionPageView(props: Props) {
             <Box mt={2} display="flex" gap={2}>
               <FormControl fullWidth>
                 <InputLabel id="role">Role</InputLabel>
-                <Select labelId="role" id="role" label="Role">
-                  <MenuItem value={10}>Buyer</MenuItem>
-                  <MenuItem value={20}>Seller</MenuItem>
-                  <MenuItem value={30}>Broker</MenuItem>
-                </Select>
+                <Controller
+                  name="role"
+                  control={control}
+                  defaultValue={ROLE[0].value}
+                  rules={{ required: 'Role is required' }}
+                  render={({ field }) => (
+                    <Select labelId="role" id="role" label="Role" {...field} error={Boolean(errors.type)}>
+                      {ROLE.map((r) => (
+                        <MenuItem key={r.value} value={r.value}>
+                          {r.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
               </FormControl>
               <FormControl fullWidth>
                 <InputLabel id="currency">Currency</InputLabel>
                 <Select labelId="currency" id="currency" label="Currency">
-                  <MenuItem value={10}>USD</MenuItem>
-                  <MenuItem value={20}>VND</MenuItem>
+                  {CURRENCY?.map((c) => (
+                    <MenuItem key={c.value} value={c.value}>
+                      {c.label}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
-              <TextField fullWidth label="Inspection period (days)" type="number" />
+              {role !== ROLE[2].value && <TextField fullWidth label="Inspection period (days)" type="number" />}
             </Box>
+            {role === ROLE[2].value && (
+              <Box mt={2} display="flex" gap={2}>
+                <TextField fullWidth label="Inspection period (days)" type="number" />
+                <FormControl fullWidth>
+                  <InputLabel id="currency">Transaction disclosure</InputLabel>
+                  <Select labelId="currency" id="currency" label="Transaction disclosure">
+                    {DISCLOSURE?.map((d) => (
+                      <MenuItem key={d.value} value={d.value}>
+                        {d.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            )}
+
             <Box mt={6}>
               <Typography fontSize={18} fontWeight={500} color="#4f5759">
                 Transaction details
@@ -108,7 +150,7 @@ function TransactionPageView(props: Props) {
                   />
                 </FormControl>
               </Box>
-              <Box mt={4} textAlign="end">
+              <Box mt={4} textAlign="center">
                 <Button variant="contained">Add Item</Button>
               </Box>
             </Box>

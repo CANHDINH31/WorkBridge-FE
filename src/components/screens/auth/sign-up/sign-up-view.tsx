@@ -4,7 +4,7 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { gender, type } from '@/utilities/contants';
+import { GENDER, TYPE } from '@/utilities/contants';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import {
   Box,
@@ -151,11 +151,11 @@ export default function SignUpView(): React.JSX.Element {
                     <Controller
                       name="type"
                       control={control}
-                      defaultValue={type[0].value}
+                      defaultValue={TYPE[0].value}
                       rules={{ required: 'Type is required' }}
                       render={({ field }) => (
                         <Select labelId="type" id="type" label="Type" {...field} error={Boolean(errors.type)}>
-                          {type.map((t) => (
+                          {TYPE.map((t) => (
                             <MenuItem key={t.value} value={t.value}>
                               {t.label}
                             </MenuItem>
@@ -169,11 +169,11 @@ export default function SignUpView(): React.JSX.Element {
                     <Controller
                       name="gender"
                       control={control}
-                      defaultValue={gender[0].value}
+                      defaultValue={GENDER[0].value}
                       rules={{ required: 'Gender is required' }}
                       render={({ field }) => (
                         <RadioGroup row {...field} aria-labelledby="gender">
-                          {gender.map((g) => (
+                          {GENDER.map((g) => (
                             <FormControlLabel
                               key={g.value}
                               value={g.value}
