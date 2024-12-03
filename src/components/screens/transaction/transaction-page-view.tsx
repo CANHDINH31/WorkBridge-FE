@@ -1,6 +1,6 @@
 'use client';
 
-import { CURRENCY, DISCLOSURE, ROLE } from '@/utilities/contants';
+import { CURRENCY, DISCLOSURE, ITEM_CATEGORY, ROLE } from '@/utilities/contants';
 import {
   Autocomplete,
   Box,
@@ -33,6 +33,10 @@ function TransactionPageView(props: Props) {
   } = useForm();
 
   const role = watch('role') ?? ROLE[0].value;
+
+  const currency = watch('currency') ?? CURRENCY[0].value;
+
+  const itemCategory = watch('item_category') ?? ITEM_CATEGORY[0];
 
   return (
     <Box width="100%">
@@ -71,13 +75,21 @@ function TransactionPageView(props: Props) {
               </FormControl>
               <FormControl fullWidth>
                 <InputLabel id="currency">Currency</InputLabel>
-                <Select labelId="currency" id="currency" label="Currency">
-                  {CURRENCY?.map((c) => (
-                    <MenuItem key={c.value} value={c.value}>
-                      {c.label}
-                    </MenuItem>
-                  ))}
-                </Select>
+                <Controller
+                  name="currency"
+                  control={control}
+                  defaultValue={CURRENCY[0].value}
+                  rules={{ required: 'Currency is required' }}
+                  render={({ field }) => (
+                    <Select labelId="currency" id="currency" label="Currency" {...field} error={Boolean(errors.type)}>
+                      {CURRENCY.map((c) => (
+                        <MenuItem key={c.value} value={c.value}>
+                          {c.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
               </FormControl>
               {role !== ROLE[2].value && <TextField fullWidth label="Inspection period (days)" type="number" />}
             </Box>
@@ -104,24 +116,59 @@ function TransactionPageView(props: Props) {
               <Box mt={2} display="flex" gap={2}>
                 <TextField label="Item name" fullWidth />
                 <FormControl fullWidth>
-                  <InputLabel htmlFor="outlined-adornment-amount">Price (USD)</InputLabel>
+                  <InputLabel htmlFor="outlined-adornment-amount">
+                    Price ({currency === CURRENCY[0]?.value ? 'USD' : 'VND'})
+                  </InputLabel>
                   <OutlinedInput
                     label="Price (USD)"
-                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                    startAdornment={<InputAdornment position="start"> $</InputAdornment>}
                     fullWidth
                   />
                 </FormControl>
               </Box>
               <Box mt={2}>
-                <Autocomplete
-                  options={[
-                    { label: 'The Shawshank Redemption', year: 1994 },
-                    { label: 'The Godfather', year: 1972 },
-                  ]}
-                  fullWidth
-                  renderInput={(params) => <TextField {...params} label="Item Category" />}
+                <Controller
+                  name="item_category"
+                  control={control}
+                  defaultValue={ITEM_CATEGORY[0]}
+                  rules={{ required: 'Item category is required' }}
+                  render={({ field, fieldState: { error } }) => (
+                    <Autocomplete
+                      {...field}
+                      options={ITEM_CATEGORY}
+                      getOptionLabel={(option) => option.label || ''}
+                      isOptionEqualToValue={(option, value) => option.value === value?.value}
+                      onChange={(_, data) => {
+                        field.onChange(data);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Item Category"
+                          error={Boolean(error)}
+                          helperText={error?.message}
+                        />
+                      )}
+                    />
+                  )}
                 />
               </Box>
+              {itemCategory !== ITEM_CATEGORY[0] && (
+                <Box>
+                  <Box mt={2} display="flex" gap={2}>
+                    <TextField label="Make" fullWidth />
+                    <TextField label="Model" fullWidth />
+                  </Box>
+                  <Box mt={2} display="flex" gap={2}>
+                    <TextField label="Year" fullWidth />
+                    <TextField label="Odometer" fullWidth />
+                  </Box>
+                  <Box mt={2}>
+                    <TextField label="VIN" fullWidth />
+                  </Box>
+                </Box>
+              )}
+
               <Box mt={2}>
                 <FormControlLabel control={<Switch defaultChecked />} label="Set transaction items as milestones" />
               </Box>
@@ -142,12 +189,16 @@ function TransactionPageView(props: Props) {
                   </Select>
                 </FormControl>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor="outlined-adornment-amount">Price (USD)</InputLabel>
-                  <OutlinedInput
-                    label="Price (USD)"
-                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                    fullWidth
-                  />
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor="outlined-adornment-amount">
+                      Price ({currency === CURRENCY[0]?.value ? 'USD' : 'VND'})
+                    </InputLabel>
+                    <OutlinedInput
+                      label="Price (USD)"
+                      startAdornment={<InputAdornment position="start"> $</InputAdornment>}
+                      fullWidth
+                    />
+                  </FormControl>
                 </FormControl>
               </Box>
               <Box mt={4} textAlign="center">

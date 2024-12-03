@@ -67,3 +67,10 @@ export const GENDER = [
   { label: 'Male', value: 'male' },
   { label: 'Other', value: 'other' },
 ];
+
+export const ITEM_CATEGORY = [
+  { label: 'Domain', value: 'domain' },
+  { label: 'Website', value: 'website' },
+  { label: 'Boats', value: 'boats' },
+  { label: 'Airplanes', value: 'airplanes' },
+];
