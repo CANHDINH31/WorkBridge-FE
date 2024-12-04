@@ -6,6 +6,7 @@ import {
   ITEM_CATEGORY,
   ITEM_CATEGORY_TYPE_1,
   ITEM_CATEGORY_TYPE_2,
+  ITEM_CATEGORY_TYPE_3,
   ItemCategory,
   ROLE,
   SHIPPING_METHOD,
@@ -18,12 +19,14 @@ import {
   Button,
   Divider,
   FormControl,
+  FormControlLabel,
   InputAdornment,
   InputLabel,
   MenuItem,
   OutlinedInput,
   Paper,
   Select,
+  Switch,
   TextField,
   Typography,
 } from '@mui/material';
@@ -46,9 +49,13 @@ function TransactionPageView(props: Props) {
   const itemCategory: ItemCategory = watch('item_category') ?? ITEM_CATEGORY[0];
   const shippingMethod = watch('shipping_method') ?? SHIPPING_METHOD[0]?.value;
   const shippingFeePaidBy = watch('shipping_fee_paid_by') ?? SHIPPING_PAID_BY[0]?.value;
+  const milestones = watch('milestones') ?? false;
 
   const showCategoryType1 = ITEM_CATEGORY_TYPE_1.map((item) => item.value).includes(itemCategory.value);
   const showCategoryType2 = ITEM_CATEGORY_TYPE_2.map((item) => item.value).includes(itemCategory.value);
+  const showCategoryType3 = ITEM_CATEGORY_TYPE_3.map((item) => item.value).includes(itemCategory.value);
+
+  console.log(milestones);
 
   return (
     <Box width="100%">
@@ -253,38 +260,96 @@ function TransactionPageView(props: Props) {
                 </Box>
               ) : null}
 
-              {/* <Box mt={2}>
-                <FormControlLabel control={<Switch defaultChecked />} label="Set transaction items as milestones" />
-              </Box>
-              <Box mt={2} display="flex" gap={2}>
-                <FormControl fullWidth>
-                  <InputLabel id="shipping_method">Shipping method</InputLabel>
-                  <Select labelId="shipping_method" id="shipping_method" label="Shipping method">
-                    <MenuItem value={10}>Standard Shipping</MenuItem>
-                    <MenuItem value={20}>Cargo Shipping</MenuItem>
-                    <MenuItem value={20}>No Shipping</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                  <InputLabel id="shipping_fee_paid_by">Shipping fee paid by</InputLabel>
-                  <Select labelId="shipping_fee_paid_by" id="shipping_fee_paid_by" label="Shipping fee paid by">
-                    <MenuItem value={10}>Buyer</MenuItem>
-                    <MenuItem value={20}>Seller</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                  <FormControl fullWidth>
-                    <InputLabel htmlFor="outlined-adornment-amount">
-                      Price ({currency === CURRENCY[0]?.value ? 'USD' : 'VND'})
-                    </InputLabel>
-                    <OutlinedInput
-                      label="Price (USD)"
-                      startAdornment={<InputAdornment position="start"> $</InputAdornment>}
-                      fullWidth
+              {showCategoryType3 ? (
+                <>
+                  <Box mt={2}>
+                    <Controller
+                      name="milestones"
+                      control={control}
+                      defaultValue={false}
+                      render={({ field }) => (
+                        <FormControlLabel
+                          control={<Switch {...field} checked={field.value} />}
+                          label="Set transaction items as milestones"
+                        />
+                      )}
                     />
-                  </FormControl>
-                </FormControl>
-              </Box> */}
+                  </Box>
+                  <Box mt={2} display="flex" gap={2}>
+                    <FormControl fullWidth>
+                      <InputLabel id="shipping_method">Shipping Method</InputLabel>
+                      <Controller
+                        name="shipping_method"
+                        control={control}
+                        defaultValue={SHIPPING_METHOD[0].value}
+                        rules={{ required: 'Shipping method is required' }}
+                        render={({ field }) => (
+                          <Select
+                            labelId="shipping_method"
+                            id="shipping_method"
+                            label="Shipping method"
+                            {...field}
+                            error={Boolean(errors.type)}
+                          >
+                            {SHIPPING_METHOD.map((s) => (
+                              <MenuItem key={s.value} value={s.value}>
+                                {s.label}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        )}
+                      />
+                    </FormControl>
+                    {shippingMethod !== SHIPPING_METHOD[1].value && (
+                      <>
+                        <FormControl fullWidth>
+                          <InputLabel id="shipping_fee_paid_by">Shipping fee paid by</InputLabel>
+                          <Controller
+                            name="shipping_fee_paid_by"
+                            control={control}
+                            defaultValue={SHIPPING_PAID_BY[0].value}
+                            render={({ field }) => (
+                              <Select
+                                labelId="shipping_fee_paid_by"
+                                id="shipping_fee_paid_by"
+                                label="Shipping fee paid by"
+                                {...field}
+                                error={Boolean(errors.type)}
+                              >
+                                {SHIPPING_PAID_BY.map((s) => (
+                                  <MenuItem key={s.value} value={s.value}>
+                                    {s.label}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            )}
+                          />
+                        </FormControl>
+                        {shippingFeePaidBy === SHIPPING_PAID_BY[0]?.value && (
+                          <FormControl fullWidth>
+                            <FormControl fullWidth>
+                              <InputLabel htmlFor="outlined-adornment-amount">
+                                Price ({currency === CURRENCY[0]?.value ? 'USD' : 'VND'})
+                              </InputLabel>
+                              <OutlinedInput
+                                label="Price (USD)"
+                                startAdornment={<InputAdornment position="start"> $</InputAdornment>}
+                                fullWidth
+                              />
+                            </FormControl>
+                          </FormControl>
+                        )}
+                      </>
+                    )}
+                  </Box>
+                </>
+              ) : null}
+              {milestones ? (
+                <Box mt={2}>
+                  <TextField label="Item inspection period (days)" fullWidth />
+                </Box>
+              ) : null}
+
               <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
                 {showCategoryType1 ? (
                   <>

@@ -141,6 +141,7 @@ export const ITEM_CATEGORY_TYPE_3 = [
 export const ITEM_CATEGORY = ITEM_CATEGORY_TYPE_1.concat(ITEM_CATEGORY_TYPE_2).concat(ITEM_CATEGORY_TYPE_3);
 
 export const SHIPPING_METHOD = [
+  { label: 'Standard Shipping', value: 'standard_shipping' },
   { label: 'Cargo Shipping', value: 'cargo_shipping' },
   { label: 'No Shipping', value: 'no_shipping' },
 ];
