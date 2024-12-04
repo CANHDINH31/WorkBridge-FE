@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 
+import SellerDetail from './seller-detail';
 import TransactionDetail from './transaction-detail';
 import TransactionItem from './transaction-item';
 import TransactionSummary from './transaction-summary';
@@ -110,7 +111,7 @@ function TransactionPageView(props: Props) {
             )}
 
             <Box mt={6}>
-              <Typography fontSize={18} fontWeight={500} color="#4f5759">
+              <Typography fontSize={16} fontWeight={600} color="#4f5759">
                 Transaction details
               </Typography>
 
@@ -123,39 +124,57 @@ function TransactionPageView(props: Props) {
               </Box>
             </Box>
 
-            {!isAddItem ? (
+            <Box mt={6}>{!isAddItem ? <TransactionSummary /> : null}</Box>
+
+            {!isAddItem && (
               <Box mt={6}>
-                <TransactionSummary />
+                <SellerDetail />
               </Box>
-            ) : null}
+            )}
 
-            <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
-              {showCategoryType1 ? (
-                <>
-                  <Button color="success" size="large">
-                    Download csv template
-                  </Button>
-                  <Button
-                    color="success"
-                    size="large"
-                    variant="outlined"
-                    endIcon={<DocumentArrowDownIcon height={24} />}
-                  >
-                    Bulk upload by csv
-                  </Button>
-                </>
-              ) : null}
+            {isAddItem ? (
+              <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
+                {showCategoryType1 ? (
+                  <>
+                    <Button color="success" size="large">
+                      Download csv template
+                    </Button>
+                    <Button
+                      color="success"
+                      size="large"
+                      variant="outlined"
+                      endIcon={<DocumentArrowDownIcon height={24} />}
+                    >
+                      Bulk upload by csv
+                    </Button>
+                  </>
+                ) : null}
 
-              <Button
-                variant="contained"
-                size="large"
-                onClick={() => {
-                  setIsAddItem(!isAddItem);
-                }}
-              >
-                Add Item
-              </Button>
-            </Box>
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={() => {
+                    setIsAddItem(!isAddItem);
+                  }}
+                >
+                  Add Item
+                </Button>
+              </Box>
+            ) : (
+              <Box mt={4} textAlign="center">
+                <Button
+                  size="large"
+                  variant="contained"
+                  sx={{ minWidth: '40%' }}
+                  onClick={() => {
+                    setIsAddItem(!isAddItem);
+                  }}
+                  color="success"
+                >
+                  Start Transaction
+                </Button>
+              </Box>
+            )}
           </Box>
         </Box>
       </Paper>

@@ -6,7 +6,7 @@ export default function TransactionSummary() {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between">
-        <Typography fontSize={18} fontWeight={500} color="#4f5759">
+        <Typography fontSize={16} fontWeight={600} color="#4f5759">
           Transaction summary
         </Typography>
         <Button>How to totals are calculated</Button>
