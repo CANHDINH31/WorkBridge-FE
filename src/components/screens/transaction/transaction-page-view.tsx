@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { CURRENCY, DISCLOSURE, ITEM_CATEGORY, ITEM_CATEGORY_TYPE_1, ItemCategory, ROLE } from '@/utilities/contants';
 import { DocumentArrowDownIcon } from '@heroicons/react/24/outline';
 import {
@@ -16,11 +17,14 @@ import {
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 
+import TransactionDetail from './transaction-detail';
 import TransactionItem from './transaction-item';
+import TransactionSummary from './transaction-summary';
 
 interface Props {}
 
 function TransactionPageView(props: Props) {
+  const [isAddItem, setIsAddItem] = useState<boolean>(true);
   const {
     handleSubmit,
     control,
@@ -110,31 +114,53 @@ function TransactionPageView(props: Props) {
                 Transaction details
               </Typography>
 
-              <Box mt={2}>
-                <TransactionItem watch={watch} control={control} errors={errors} />
-              </Box>
+              {isAddItem ? (
+                <Box mt={2}>
+                  <TransactionItem watch={watch} control={control} errors={errors} />
+                </Box>
+              ) : (
+                <TransactionDetail />
+              )}
+            </Box>
 
-              <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
-                {showCategoryType1 ? (
-                  <>
-                    <Button color="success" size="large">
-                      Download csv template
-                    </Button>
-                    <Button
-                      color="success"
-                      size="large"
-                      variant="outlined"
-                      endIcon={<DocumentArrowDownIcon height={24} />}
-                    >
-                      Bulk upload by csv
-                    </Button>
-                  </>
-                ) : null}
+            {!isAddItem ? (
+              <Box mt={6}>
+                <Typography fontSize={18} fontWeight={500} color="#4f5759">
+                  Transaction summary
+                </Typography>
 
-                <Button variant="contained" size="large">
-                  Add Item
-                </Button>
+                <Box mt={2}>
+                  <TransactionSummary />
+                </Box>
               </Box>
+            ) : null}
+
+            <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
+              {showCategoryType1 ? (
+                <>
+                  <Button color="success" size="large">
+                    Download csv template
+                  </Button>
+                  <Button
+                    color="success"
+                    size="large"
+                    variant="outlined"
+                    endIcon={<DocumentArrowDownIcon height={24} />}
+                  >
+                    Bulk upload by csv
+                  </Button>
+                </>
+              ) : null}
+
+              <Button
+                variant="contained"
+                size="large"
+                onClick={() => {
+                  setIsAddItem(!isAddItem);
+                }}
+              >
+                Add Item
+              </Button>
             </Box>
           </Box>
         </Box>
