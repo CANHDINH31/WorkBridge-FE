@@ -125,13 +125,7 @@ function TransactionPageView(props: Props) {
 
             {!isAddItem ? (
               <Box mt={6}>
-                <Typography fontSize={18} fontWeight={500} color="#4f5759">
-                  Transaction summary
-                </Typography>
-
-                <Box mt={2}>
-                  <TransactionSummary />
-                </Box>
+                <TransactionSummary />
               </Box>
             ) : null}
 
