@@ -114,13 +114,13 @@ function TransactionPageView(props: Props) {
                 Transaction details
               </Typography>
 
-              {isAddItem ? (
-                <Box mt={2}>
+              <Box mt={2}>
+                {isAddItem ? (
                   <TransactionItem watch={watch} control={control} errors={errors} />
-                </Box>
-              ) : (
-                <TransactionDetail />
-              )}
+                ) : (
+                  <TransactionDetail />
+                )}
+              </Box>
             </Box>
 
             {!isAddItem ? (
