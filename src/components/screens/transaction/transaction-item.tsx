@@ -3,7 +3,6 @@
 import {
   CURRENCY,
   ITEM_CATEGORY,
-  ITEM_CATEGORY_TYPE_1,
   ITEM_CATEGORY_TYPE_2,
   ITEM_CATEGORY_TYPE_3,
   ItemCategory,
@@ -38,7 +37,6 @@ export default function TransactionItem({ watch, control, errors }: Props) {
   const shippingFeePaidBy = watch('shipping_fee_paid_by') ?? SHIPPING_PAID_BY[0]?.value;
   const milestones = watch('milestones') ?? false;
 
-  const showCategoryType1 = ITEM_CATEGORY_TYPE_1.map((item) => item.value).includes(itemCategory.value);
   const showCategoryType2 = ITEM_CATEGORY_TYPE_2.map((item) => item.value).includes(itemCategory.value);
   const showCategoryType3 = ITEM_CATEGORY_TYPE_3.map((item) => item.value).includes(itemCategory.value);
   return (
