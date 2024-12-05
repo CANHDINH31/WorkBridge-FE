@@ -12,8 +12,10 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (token && (pathname === paths.auth.signIn || pathname === paths.auth.signUp)) {
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL(paths.home, request.url));
   }
+
+  if (!token && pathname === paths.transaction) return NextResponse.redirect(new URL(paths.auth.signIn, request.url));
 
   return NextResponse.next();
 }
