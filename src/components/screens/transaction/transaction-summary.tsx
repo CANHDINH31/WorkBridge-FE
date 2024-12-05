@@ -1,15 +1,26 @@
 'use client';
 
+import { useState } from 'react';
 import { Box, Button, Divider, Typography } from '@mui/material';
 
+import BasicModal from '@/components/core/common/basic-modal';
+
 export default function TransactionSummary() {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between">
         <Typography fontSize={16} fontWeight={600} color="#4f5759">
           Transaction summary
         </Typography>
-        <Button>How to totals are calculated</Button>
+        <Button
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          How to totals are calculated
+        </Button>
       </Box>
 
       <Box mt={2}>
@@ -36,6 +47,39 @@ export default function TransactionSummary() {
           All prices are in USD. Taxes may apply.
         </Typography>
       </Box>
+
+      {/* Modal */}
+      <BasicModal
+        open={isOpen}
+        handleClose={() => {
+          setIsOpen(false);
+        }}
+      >
+        <Typography fontSize={16} fontWeight={600} color="#4f5759">
+          How are the totals calculated?
+        </Typography>
+        <Box mt={2}>
+          <Typography fontSize={14} color="#4f5759" fontWeight={600}>
+            Buyer price:
+          </Typography>
+          <Typography fontSize={14}>
+            This is the estimated amount that the buyer will pay for inclusive of fees.
+          </Typography>
+          <Typography mt={2} fontSize={14} color="#4f5759" fontWeight={600}>
+            Seller proceeds:
+          </Typography>
+          <Typography fontSize={14}>This is the estimated amount that the seller will receive minus fees.</Typography>
+        </Box>
+        <Box mt={2} textAlign="end">
+          <Button
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
+            Got it
+          </Button>
+        </Box>
+      </BasicModal>
     </Box>
   );
 }
