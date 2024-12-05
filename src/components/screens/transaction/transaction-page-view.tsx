@@ -65,7 +65,7 @@ function TransactionPageView(props: Props) {
                 {isAddItem ? (
                   <TransactionItem watch={watch} control={control} errors={errors} register={register} />
                 ) : (
-                  <TransactionDetail />
+                  <TransactionDetail watch={watch} />
                 )}
               </Box>
             </Box>
@@ -121,7 +121,14 @@ function TransactionPageView(props: Props) {
                     </Link>
                   </Typography>
                 </Box>
-                <Button size="large" variant="contained" sx={{ minWidth: '40%' }} color="success" type="submit">
+                <Button
+                  size="large"
+                  variant="contained"
+                  sx={{ minWidth: '40%' }}
+                  color="success"
+                  type="submit"
+                  disabled={!isCheck}
+                >
                   Start Transaction
                 </Button>
               </Box>
