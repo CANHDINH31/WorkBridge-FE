@@ -8,6 +8,7 @@ interface Props {
 }
 
 export default function TransactionDetail({ watch }: Props) {
+  const category = watch('category');
   return (
     <Box
       p={2.5}
@@ -18,10 +19,11 @@ export default function TransactionDetail({ watch }: Props) {
         <Typography fontWeight={600}>{watch('name')}</Typography>
         <Typography>${watch('price')}</Typography>
       </Box>
-      <Typography fontStyle="italic">Website</Typography>
+      <Typography fontStyle="italic">{category?.label}</Typography>
+      {watch('year') && <Typography>{`${watch('year')}  ${watch('make')}  ${watch('model')}`}</Typography>}
       <Typography>{watch('description')}</Typography>
-      {watch('item_inspection_period') && (
-        <Typography>Inspection Period: {watch('item_inspection_period')} Day(s)</Typography>
+      {watch('inspection_period') && (
+        <Typography mt={1}>Inspection Period: {watch('inspection_period')} Day(s)</Typography>
       )}
     </Box>
   );
