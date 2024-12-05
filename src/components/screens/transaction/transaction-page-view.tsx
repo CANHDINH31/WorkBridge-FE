@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ITEM_CATEGORY, ITEM_CATEGORY_TYPE_1, ItemCategory, ROLE } from '@/utilities/contants';
 import { DocumentArrowDownIcon } from '@heroicons/react/24/outline';
-import { Box, Button, Checkbox, Divider, Paper, Select, TextField, Typography } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { Box, Button, Checkbox, Divider, Paper, Typography } from '@mui/material';
+import { FieldValues, useForm } from 'react-hook-form';
 
 import SellerBuyerDetail from './seller-buyer-detail';
 import TransactionDetail from './transaction-detail';
@@ -32,6 +32,10 @@ function TransactionPageView(props: Props) {
   const itemCategory: ItemCategory = watch('item_category') ?? ITEM_CATEGORY[0];
   const showCategoryType1 = ITEM_CATEGORY_TYPE_1.map((item) => item.value).includes(itemCategory.value);
 
+  const onSubmit = (data: FieldValues) => {
+    console.log(data, 'data');
+  };
+
   return (
     <Box width="100%">
       <Paper elevation={3}>
@@ -46,8 +50,8 @@ function TransactionPageView(props: Props) {
               }}
             />
           </Box>
-          <Box>
-            <TransactionHead control={control} role={role} errors={errors} />
+          <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            <TransactionHead control={control} role={role} errors={errors} register={register} />
 
             <Box mt={6}>
               <Typography fontSize={16} fontWeight={600} color="#4f5759">
@@ -120,15 +124,7 @@ function TransactionPageView(props: Props) {
                     </Link>
                   </Typography>
                 </Box>
-                <Button
-                  size="large"
-                  variant="contained"
-                  sx={{ minWidth: '40%' }}
-                  onClick={() => {
-                    setIsAddItem(!isAddItem);
-                  }}
-                  color="success"
-                >
+                <Button size="large" variant="contained" sx={{ minWidth: '40%' }} color="success" type="submit">
                   Start Transaction
                 </Button>
               </Box>
