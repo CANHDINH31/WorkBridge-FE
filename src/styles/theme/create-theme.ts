@@ -22,10 +22,12 @@ declare module '@mui/material/styles/createPalette' {
 
   interface Palette {
     neutral: PaletteRange;
+    green: PaletteRange;
   }
 
   interface PaletteOptions {
     neutral?: PaletteRange;
+    green?: PaletteRange;
   }
 
   interface TypeBackground {
