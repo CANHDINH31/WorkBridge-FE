@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Button, Divider, MenuItem, Select, Typography } from '@mui/material';
 
 import BasicModal from '@/components/core/common/basic-modal';
 
@@ -29,7 +29,15 @@ export default function TransactionSummary() {
           <Typography>$55.00</Typography>
         </Box>
         <Box display="flex" justifyContent="space-between" mt={1}>
-          <Typography>Escrow fee paid by:</Typography>
+          <Box display="flex" gap={1} alignItems="center">
+            <Typography>Escrow fee paid by:</Typography>
+            <Select labelId="demo-simple-select-label" id="demo-simple-select" variant="standard">
+              <MenuItem value={10}>Buyer</MenuItem>
+              <MenuItem value={20}>Seller</MenuItem>
+              <MenuItem value={30}>50% Buyer / 50% Seller</MenuItem>
+            </Select>
+          </Box>
+
           <Typography>$88.00</Typography>
         </Box>
         <Box mt={1}>
