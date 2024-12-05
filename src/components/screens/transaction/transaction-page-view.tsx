@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 
-import SellerDetail from './seller-detail';
+import SellerBuyerDetail from './seller-buyer-detail';
 import TransactionDetail from './transaction-detail';
 import TransactionItem from './transaction-item';
 import TransactionSummary from './transaction-summary';
@@ -128,7 +128,7 @@ function TransactionPageView(props: Props) {
 
             {!isAddItem && (
               <Box mt={6}>
-                <SellerDetail />
+                <SellerBuyerDetail role={role} />
               </Box>
             )}
 
