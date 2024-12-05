@@ -29,11 +29,14 @@ function TransactionPageView(props: Props) {
   } = useForm();
 
   const role = watch('role') ?? ROLE[0].value;
-  const itemCategory: ItemCategory = watch('item_category') ?? ITEM_CATEGORY[0];
-  const showCategoryType1 = ITEM_CATEGORY_TYPE_1.map((item) => item.value).includes(itemCategory.value);
+  const category: ItemCategory = watch('category') ?? ITEM_CATEGORY[0];
+  const showCategoryType1 = ITEM_CATEGORY_TYPE_1.map((item) => item.value).includes(category.value);
 
   const onSubmit = (data: FieldValues) => {
     console.log(data, 'data');
+    if (isAddItem) {
+      setIsAddItem(false);
+    }
   };
 
   return (
@@ -60,7 +63,7 @@ function TransactionPageView(props: Props) {
 
               <Box mt={2}>
                 {isAddItem ? (
-                  <TransactionItem watch={watch} control={control} errors={errors} />
+                  <TransactionItem watch={watch} control={control} errors={errors} register={register} />
                 ) : (
                   <TransactionDetail />
                 )}
@@ -93,13 +96,7 @@ function TransactionPageView(props: Props) {
                   </>
                 ) : null}
 
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={() => {
-                    setIsAddItem(!isAddItem);
-                  }}
-                >
+                <Button variant="contained" size="large" type="submit">
                   Add Item
                 </Button>
               </Box>
