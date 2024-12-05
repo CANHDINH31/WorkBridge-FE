@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { CURRENCY, DISCLOSURE, ITEM_CATEGORY, ITEM_CATEGORY_TYPE_1, ItemCategory, ROLE } from '@/utilities/contants';
 import { DocumentArrowDownIcon } from '@heroicons/react/24/outline';
 import {
   Box,
   Button,
+  Checkbox,
   Divider,
   FormControl,
   InputLabel,
@@ -26,6 +28,8 @@ interface Props {}
 
 function TransactionPageView(props: Props) {
   const [isAddItem, setIsAddItem] = useState<boolean>(true);
+  const [isCheck, setIsCheck] = useState<boolean>(false);
+
   const {
     handleSubmit,
     control,
@@ -162,6 +166,25 @@ function TransactionPageView(props: Props) {
               </Box>
             ) : (
               <Box mt={4} textAlign="center">
+                <Box mb={2} display="flex" gap={0.5} alignItems="center" justifyContent="center">
+                  <Checkbox
+                    checked={isCheck}
+                    onChange={() => {
+                      setIsCheck(!isCheck);
+                    }}
+                  />
+                  <Typography>
+                    I have read and agree to the{' '}
+                    <Link href="/" style={{ textDecoration: 'none', color: '#1976d2' }}>
+                      General Escrow Instructions
+                    </Link>{' '}
+                    and
+                    <Link href="/" style={{ textDecoration: 'none', color: '#1976d2' }}>
+                      {' '}
+                      Privacy Policy.
+                    </Link>
+                  </Typography>
+                </Box>
                 <Button
                   size="large"
                   variant="contained"
