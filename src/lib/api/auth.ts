@@ -1,6 +1,13 @@
 import { request } from '@/utilities/request';
 
-import { ISignInParams, ISignInResponse, ISignUpParams, ISignUpResponse } from '@/types';
+import {
+  IGoogleParams,
+  IGoogleResponse,
+  ISignInParams,
+  ISignInResponse,
+  ISignUpParams,
+  ISignUpResponse,
+} from '@/types';
 
 class AuthService {
   private _prefixURLNextServer = '/api/auth';
@@ -8,6 +15,15 @@ class AuthService {
   public signUp = async (data: ISignUpParams): Promise<ISignUpResponse> => {
     try {
       const rs = await request.post('/auth/register', data);
+      return Promise.resolve(rs.data);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+
+  public loginGoogle = async (data: IGoogleParams): Promise<IGoogleResponse> => {
+    try {
+      const rs = await request.post('/auth/google', data);
       return Promise.resolve(rs.data);
     } catch (error) {
       return Promise.reject(error);

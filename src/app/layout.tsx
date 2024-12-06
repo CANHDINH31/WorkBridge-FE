@@ -7,6 +7,7 @@ import { getServerAuthSession } from '@/server/auth';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
 
+import { authService } from '@/lib/api';
 import NextAuthProvider from '@/contexts/next-auth-provider';
 import { LocalizationProvider } from '@/components/core/localization-provider';
 import { ReactQueryClientProvider } from '@/components/core/react-query-client-provider';

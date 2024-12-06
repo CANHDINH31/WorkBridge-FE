@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles';
 import { signOut, useSession } from 'next-auth/react';
 
 import { paths } from '@/paths';
+import { authService } from '@/lib/api';
 import { primary } from '@/styles/theme/colors';
 
 interface IMenuItem {
@@ -53,6 +54,7 @@ function HeaderMenu() {
 
   const handleSignOut = async () => {
     await signOut();
+    await authService.removeCookiesByNextServer();
   };
 
   return (

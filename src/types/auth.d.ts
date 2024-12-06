@@ -8,6 +8,11 @@ export interface ISignInParams {
   password: string;
 }
 
+export interface IGoogleParams {
+  email: string;
+  name: string;
+}
+
 export interface ISignUpParams {
   email: string;
   password: string;
@@ -25,6 +30,11 @@ export interface ISignInResponse {
 export interface ISignUpResponse {
   message: string;
   status: number;
+}
+
+export interface IGoogleResponse {
+  message: string;
+  token: string;
 }
 
 interface IUserResponse {
