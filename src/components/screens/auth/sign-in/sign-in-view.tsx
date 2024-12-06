@@ -50,6 +50,10 @@ export default function SignInView(): React.JSX.Element {
     mutate(data as ISignInParams);
   };
 
+  const hanldeLoginGoogle = async () => {
+    await signIn('google', { redirect: false });
+  };
+
   return (
     <AuthLayout>
       <Box display="flex" justifyContent="center" alignItems="center">
@@ -132,6 +136,7 @@ export default function SignInView(): React.JSX.Element {
                   size="large"
                   color="error"
                   startIcon={<Box component="img" src="/images/google.png" />}
+                  onClick={hanldeLoginGoogle}
                 >
                   Đăng nhập với Google
                 </Button>

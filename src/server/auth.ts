@@ -1,6 +1,10 @@
 import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth';
 import { type JWT } from 'next-auth/jwt';
+// eslint-disable-next-line import/no-named-as-default
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+
+import { paths } from '@/paths';
 
 declare module 'next-auth' {
   interface Session extends DefaultSession {
@@ -11,25 +15,8 @@ declare module 'next-auth' {
 }
 
 export const authOptions: NextAuthOptions = {
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        // eslint-disable-next-line no-param-reassign
-        token = user as unknown as JWT;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.token = token.id as string;
-        session.info = token.user;
-      }
-      return session;
-    },
-  },
-
   pages: {
-    signIn: '/auth/sign-in',
+    signIn: paths.auth.signIn,
   },
 
   session: {
@@ -39,6 +26,14 @@ export const authOptions: NextAuthOptions = {
   },
 
   providers: [
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_ID ?? '',
+      clientSecret: process.env.AUTH_GOOGLE_SECRET ?? '',
+      authorization: {
+        params: { scope: 'profile email', prompt: 'select_account' },
+      },
+    }),
+
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -47,10 +42,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (credentials) {
           const data = JSON.parse(credentials.data);
-          return {
-            id: data._id,
-            user: data,
-          };
+          return { id: data.id, name: data.name, email: data.email };
         }
         return null;
       },

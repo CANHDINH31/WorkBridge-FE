@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { clearToken } from '@/utilities/jwt';
 import { BellAlertIcon, HomeIcon, UserGroupIcon } from '@heroicons/react/24/solid';
@@ -9,8 +8,7 @@ import { styled } from '@mui/material/styles';
 import { signOut, useSession } from 'next-auth/react';
 
 import { paths } from '@/paths';
-
-interface Props {}
+import { primary } from '@/styles/theme/colors';
 
 interface IMenuItem {
   icon?: React.ElementType;
@@ -53,7 +51,6 @@ function HeaderMenu() {
   const session = useSession();
   const router = useRouter();
   const pathname = usePathname();
-  const [active, setActive] = useState<number>(0);
 
   const handleSignOut = async () => {
     clearToken();
@@ -84,14 +81,21 @@ function HeaderMenu() {
             />
           </Box>
         ))}
-        {session.data?.info?.email ? (
+        {session.data?.user?.email ? (
           <Box
             onClick={handleSignOut}
-            component="img"
-            src="https://media.licdn.com/dms/image/v2/D4D03AQHt-5xaPvavOw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1703069041306?e=1736985600&v=beta&t=kJuH_aqS8tY9IC3yIvErOTYcE5KRs3Af5VhtxMzUrwo"
             width={32}
-            sx={{ objectFit: 'contain', borderRadius: '50%' }}
-          />
+            height={32}
+            sx={{ borderRadius: '50%' }}
+            bgcolor={primary}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            color="white"
+            fontWeight={600}
+          >
+            {session.data?.user?.email?.charAt(0)?.toUpperCase()}
+          </Box>
         ) : (
           <Button
             variant="outlined"

@@ -1,5 +1,6 @@
 import type { ColorSystemOptions } from '@mui/material/styles';
 
+import { primary } from './colors';
 import type { ColorScheme } from './types';
 
 declare module '@mui/material/styles' {}
@@ -8,7 +9,7 @@ export const colorSchemes = {
   light: {
     palette: {
       primary: {
-        main: '#007456',
+        main: primary,
       },
       neutral: {
         50: '#f5f5f5',
