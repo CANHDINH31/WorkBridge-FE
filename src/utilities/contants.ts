@@ -145,3 +145,11 @@ export const SHIPPING_METHOD = [
   { label: 'Cargo Shipping', value: 'cargo_shipping' },
   { label: 'No Shipping', value: 'no_shipping' },
 ];
+
+export const WORKBRIDGE_FEE = 50.0;
+
+export const WB_FEE = [
+  { value: 'buyer', label: 'Buyer' },
+  { value: 'seller', label: 'Seller' },
+  { value: 'fair', label: '50% Buyer / 50% Seller' },
+];
