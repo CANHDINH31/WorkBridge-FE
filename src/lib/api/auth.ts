@@ -3,6 +3,8 @@ import { request } from '@/utilities/request';
 import { ISignInParams, ISignInResponse, ISignUpParams, ISignUpResponse } from '@/types';
 
 class AuthService {
+  private _prefixURLNextServer = '/api/auth';
+
   public signUp = async (data: ISignUpParams): Promise<ISignUpResponse> => {
     try {
       const rs = await request.post('/auth/register', data);
@@ -30,6 +32,34 @@ class AuthService {
       return Promise.reject(error);
     }
   };
+
+  private async handleFetch(url: string, accessToken?: string): Promise<void> {
+    await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ accessToken }),
+    });
+  }
+
+  public async setCookiesByNextServer(accessToken: string): Promise<void> {
+    try {
+      await this.handleFetch(`${this._prefixURLNextServer}/sign-in`, accessToken);
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  public async removeCookiesByNextServer(): Promise<void> {
+    try {
+      await this.handleFetch(`${this._prefixURLNextServer}/sign-out`);
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
 
 export const authService = new AuthService();

@@ -1,7 +1,6 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { clearToken } from '@/utilities/jwt';
 import { BellAlertIcon, HomeIcon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { Badge, Box, Button, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -53,7 +52,6 @@ function HeaderMenu() {
   const pathname = usePathname();
 
   const handleSignOut = async () => {
-    clearToken();
     await signOut();
   };
 
@@ -86,7 +84,7 @@ function HeaderMenu() {
             onClick={handleSignOut}
             width={32}
             height={32}
-            sx={{ borderRadius: '50%' }}
+            sx={{ borderRadius: '50%', cursor: 'pointer' }}
             bgcolor={primary}
             display="flex"
             justifyContent="center"

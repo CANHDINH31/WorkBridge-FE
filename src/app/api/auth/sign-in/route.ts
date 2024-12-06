@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     {
       status: 200,
       headers: {
-        'Set-cookie': `access_token=${accessToken}; Secure; Path=/`,
+        'Set-cookie': `access_token=${accessToken}; Path=/`,
       },
     }
   );

@@ -9,6 +9,15 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
+  // login google continue
+  const accessToken = request.cookies.get('access_token');
+
+  console.log(accessToken, 'accesstoken');
+
+  if (token?.picture) {
+    console.log('login google');
+  }
+
   const { pathname } = request.nextUrl;
 
   if (token && (pathname === paths.auth.signIn || pathname === paths.auth.signUp)) {
