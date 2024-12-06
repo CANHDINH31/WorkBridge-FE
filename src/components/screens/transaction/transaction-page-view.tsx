@@ -65,7 +65,7 @@ function TransactionPageView(props: Props) {
                 {isAddItem ? (
                   <TransactionItem watch={watch} control={control} errors={errors} register={register} />
                 ) : (
-                  <TransactionDetail watch={watch} />
+                  <TransactionDetail watch={watch} setIsAddItem={setIsAddItem} />
                 )}
               </Box>
             </Box>
@@ -74,13 +74,13 @@ function TransactionPageView(props: Props) {
 
             {!isAddItem && (
               <Box mt={6}>
-                <SellerBuyerDetail role={role} />
+                <SellerBuyerDetail role={role} errors={errors} register={register} />
               </Box>
             )}
 
             {isAddItem ? (
               <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
-                {showCategoryType1 ? (
+                {/* {showCategoryType1 ? (
                   <>
                     <Button color="success" size="large">
                       Download csv template
@@ -94,7 +94,7 @@ function TransactionPageView(props: Props) {
                       Bulk upload by csv
                     </Button>
                   </>
-                ) : null}
+                ) : null} */}
 
                 <Button variant="contained" size="large" type="submit">
                   Add Item

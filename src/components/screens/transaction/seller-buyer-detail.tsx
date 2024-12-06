@@ -3,12 +3,15 @@
 import { useState } from 'react';
 import { ROLE } from '@/utilities/contants';
 import { Box, Checkbox, Divider, TextField, Typography } from '@mui/material';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface Props {
   role: string;
+  errors: FieldErrors<FieldValues>;
+  register: UseFormRegister<FieldValues>;
 }
 
-export default function SellerBuyerDetail({ role }: Props) {
+export default function SellerBuyerDetail({ role, errors, register }: Props) {
   const [isCheck, setIsCheck] = useState<boolean>(false);
   return (
     <Box>
@@ -30,15 +33,39 @@ export default function SellerBuyerDetail({ role }: Props) {
 
       {role === ROLE?.[1]?.value && isCheck ? (
         <Box mt={2} display="flex" gap={2}>
-          <TextField label="Email" fullWidth />
-          <TextField label="Phone" fullWidth />
+          <TextField
+            label="Email"
+            fullWidth
+            {...register('email', { required: 'Email is required' })}
+            error={Boolean(errors.email)}
+            helperText={errors?.email?.message?.toString()}
+          />
+          <TextField
+            label="Phone"
+            fullWidth
+            {...register('phone', { required: 'Phone is required' })}
+            error={Boolean(errors.phone)}
+            helperText={errors?.phone?.message?.toString()}
+          />
         </Box>
       ) : null}
 
       {role === ROLE?.[0]?.value ? (
         <Box mt={2} display="flex" gap={2}>
-          <TextField label="Email" fullWidth />
-          <TextField label="Phone" fullWidth />
+          <TextField
+            label="Email"
+            fullWidth
+            {...register('email', { required: 'Email is required' })}
+            error={Boolean(errors.email)}
+            helperText={errors?.email?.message?.toString()}
+          />
+          <TextField
+            label="Phone"
+            fullWidth
+            {...register('phone', { required: 'Phone is required' })}
+            error={Boolean(errors.phone)}
+            helperText={errors?.phone?.message?.toString()}
+          />
         </Box>
       ) : null}
 

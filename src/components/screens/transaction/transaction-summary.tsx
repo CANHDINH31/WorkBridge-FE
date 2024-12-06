@@ -15,7 +15,7 @@ export default function TransactionSummary({ watch, control }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const price = Number(watch('price')).toFixed(2);
-  const feePrice = Number(watch('fee_price')).toFixed(2) ?? 0;
+  const feePrice = watch('fee_price') ? Number(watch('fee_price')).toFixed(2) : 0;
   const feeWorkBridge = Number(WORKBRIDGE_FEE).toFixed(2);
 
   const feeWB = watch('fee_workbridge');
