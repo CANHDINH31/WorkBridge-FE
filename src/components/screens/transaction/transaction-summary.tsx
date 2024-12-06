@@ -2,10 +2,14 @@
 
 import { useState } from 'react';
 import { Box, Button, Divider, MenuItem, Select, Typography } from '@mui/material';
+import { FieldValues, UseFormWatch } from 'react-hook-form';
 
 import BasicModal from '@/components/core/common/basic-modal';
 
-export default function TransactionSummary() {
+interface Props {
+  watch: UseFormWatch<FieldValues>;
+}
+export default function TransactionSummary({ watch }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -26,11 +30,18 @@ export default function TransactionSummary() {
       <Box mt={2}>
         <Box display="flex" justifyContent="space-between">
           <Typography>Subtotal:</Typography>
-          <Typography>$55.00</Typography>
+          <Typography>${watch('price')}</Typography>
         </Box>
+        {watch('fee_price') && (
+          <Box display="flex" justifyContent="space-between">
+            <Typography>Subtotal:</Typography>
+            <Typography>${watch('fee_price')}</Typography>
+          </Box>
+        )}
+
         <Box display="flex" justifyContent="space-between" mt={1}>
           <Box display="flex" gap={1} alignItems="center">
-            <Typography>Escrow fee paid by:</Typography>
+            <Typography>WorkBridge fee paid by:</Typography>
             <Select labelId="demo-simple-select-label" id="demo-simple-select" variant="standard">
               <MenuItem value={10}>Buyer</MenuItem>
               <MenuItem value={20}>Seller</MenuItem>

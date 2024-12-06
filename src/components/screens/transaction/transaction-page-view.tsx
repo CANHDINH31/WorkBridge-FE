@@ -70,7 +70,7 @@ function TransactionPageView(props: Props) {
               </Box>
             </Box>
 
-            <Box mt={6}>{!isAddItem ? <TransactionSummary /> : null}</Box>
+            <Box mt={6}>{!isAddItem ? <TransactionSummary watch={watch} /> : null}</Box>
 
             {!isAddItem && (
               <Box mt={6}>
