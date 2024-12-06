@@ -126,7 +126,13 @@ export default function SignInView(): React.JSX.Element {
                 cookie của WorkBridge.
               </Typography>
               <Box mt={2}>
-                <Button fullWidth variant="contained" size="large" color="error">
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  size="large"
+                  color="error"
+                  startIcon={<Box component="img" src="/images/google.png" />}
+                >
                   Đăng nhập với Google
                 </Button>
               </Box>
