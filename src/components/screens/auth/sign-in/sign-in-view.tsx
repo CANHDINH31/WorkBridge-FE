@@ -108,9 +108,13 @@ export default function SignInView(): React.JSX.Element {
                     })}
                   />
                 </Box>
-                <Typography mt={2} color="#0073b1" fontSize={14} fontWeight={600}>
+                <Button
+                  sx={{ marginTop: 1, fontSize: 14, fontWeight: 600 }}
+                  color="info"
+                  href={paths.auth.forgotPassword}
+                >
                   Quên mật khẩu ?
-                </Typography>
+                </Button>
                 <Box mt={2}>
                   <Button variant="contained" fullWidth size="large" color="info" type="submit" disabled={isPending}>
                     Đăng nhập
