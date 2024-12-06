@@ -4,11 +4,9 @@ import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { Box, Button, Paper, Stack, TextField, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { signIn } from 'next-auth/react';
 import { FieldValues, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { ISignInParams } from '@/types';
 import { paths } from '@/paths';
 import { authService } from '@/lib/api';
 import { AuthLayout } from '@/components/layout/auth/auth-layout';
@@ -17,17 +15,17 @@ export default function ForgotPasswordView(): React.JSX.Element {
   const router = useRouter();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: authService.signIn,
+    mutationFn: authService.forgotPassword,
     onSuccess: async (res) => {
-      const decoded = await authService.verifyToken(res.data.token);
-      await signIn('credentials', { data: JSON.stringify(decoded?.data), redirect: false });
-      await authService.setCookiesByNextServer(res.data.token);
+      console.log(res);
       toast.success(res.message);
       reset();
-      router.push('/');
+      router.push(paths.auth.signIn);
     },
-    onError: (err) => {
-      toast.error(err.message);
+    onError: (err: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      toast.error(err.response.data.message);
+      reset();
     },
   });
 
@@ -39,7 +37,7 @@ export default function ForgotPasswordView(): React.JSX.Element {
   } = useForm();
 
   const onSubmit = (data: FieldValues) => {
-    mutate(data as ISignInParams);
+    mutate(data as { email: string });
   };
 
   return (
@@ -73,7 +71,7 @@ export default function ForgotPasswordView(): React.JSX.Element {
                 </Typography>
                 <Box mt={2}>
                   <Button variant="contained" fullWidth size="large" color="info" type="submit" disabled={isPending}>
-                    Đăng nhập
+                    Tiếp theo
                   </Button>
                   <Button href={paths.auth.signIn} fullWidth color="info" sx={{ marginTop: 1 }}>
                     Trở lại
