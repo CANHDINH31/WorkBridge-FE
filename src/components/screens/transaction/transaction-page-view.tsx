@@ -2,10 +2,20 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ITEM_CATEGORY, ITEM_CATEGORY_TYPE_1, ItemCategory, ROLE } from '@/utilities/contants';
-import { DocumentArrowDownIcon } from '@heroicons/react/24/outline';
+import {
+  ITEM_CATEGORY,
+  // ITEM_CATEGORY_TYPE_1,
+  ItemCategory,
+  ROLE,
+} from '@/utilities/contants';
+// import { DocumentArrowDownIcon } from '@heroicons/react/24/outline';
 import { Box, Button, Checkbox, Divider, Paper, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { FieldValues, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+
+import { ITransactionParams } from '@/types';
+import { transactionService } from '@/lib/api';
 
 import SellerBuyerDetail from './seller-buyer-detail';
 import TransactionDetail from './transaction-detail';
@@ -30,12 +40,34 @@ function TransactionPageView(props: Props) {
 
   const role = watch('role') ?? ROLE[0].value;
   const category: ItemCategory = watch('category') ?? ITEM_CATEGORY[0];
-  const showCategoryType1 = ITEM_CATEGORY_TYPE_1.map((item) => item.value).includes(category.value);
+  // const showCategoryType1 = ITEM_CATEGORY_TYPE_1.map((item) => item.value).includes(category.value);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: transactionService.create,
+    onSuccess: async (res) => {
+      toast.success(res.message);
+      reset();
+      // router.push('/');
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data, 'data');
     if (isAddItem) {
       setIsAddItem(false);
+    }
+
+    if (!isAddItem) {
+      const { milestones, ...rest } = data;
+
+      rest.inspection_period = parseFloat(rest.inspection_period as string);
+      rest.price = parseFloat(rest.price as string);
+      rest.fee_price = rest?.fee_price ? parseFloat(rest?.fee_price as string) : 0;
+      rest.category = rest.category.value;
+
+      mutate(rest as ITransactionParams);
     }
   };
 
@@ -127,7 +159,7 @@ function TransactionPageView(props: Props) {
                   sx={{ minWidth: '40%' }}
                   color="success"
                   type="submit"
-                  disabled={!isCheck}
+                  disabled={!isCheck || isPending}
                 >
                   Start Transaction
                 </Button>
