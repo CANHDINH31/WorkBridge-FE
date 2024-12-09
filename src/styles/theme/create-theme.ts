@@ -1,6 +1,7 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 
 import { colorSchemes } from './color-schemes';
+import { text } from './colors';
 import { shadows } from './shadows';
 import type { Theme } from './types';
 import { typography } from './typography';
@@ -67,7 +68,27 @@ export function createTheme(): Theme {
     colorSchemes,
     shadows,
     shape: { borderRadius: 8 },
-    typography,
+    typography: {
+      h1: {
+        color: text,
+      },
+      h2: {
+        color: text,
+      },
+      h3: {
+        color: text,
+      },
+      h4: { color: text },
+      h5: { color: text },
+      h6: { color: text },
+      subtitle1: { color: text },
+      subtitle2: { color: text },
+      body1: { color: text },
+      body2: { color: text },
+      button: { color: text },
+      caption: { color: text },
+      overline: { color: text },
+    },
   });
 
   return theme;

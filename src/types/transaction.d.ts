@@ -20,3 +20,8 @@ export interface ITransactionParams {
   phone?: string;
   disclosure?: 'confidential' | 'buyer' | 'seller' | 'buyer_and_seller';
 }
+
+export interface ITransactionResponse {
+  message: string;
+  data: ITransactionParams & { _id: string };
+}
