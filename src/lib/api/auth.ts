@@ -39,6 +39,15 @@ class AuthService {
     }
   };
 
+  public forgotPassword = async (email: string): Promise<ISignInResponse> => {
+    try {
+      const rs = await request.post('/auth/forgot-password', { email });
+      return Promise.resolve(rs.data);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+
   public verifyToken = async (token: string): Promise<ISignInResponse> => {
     try {
       const rs = await request.post('/auth/verify-token', { token });

@@ -17,17 +17,16 @@ export default function ForgotPasswordView(): React.JSX.Element {
   const router = useRouter();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: authService.signIn,
+    mutationFn: authService.forgotPassword,
     onSuccess: async (res) => {
-      const decoded = await authService.verifyToken(res.data.token);
-      await signIn('credentials', { data: JSON.stringify(decoded?.data), redirect: false });
-      await authService.setCookiesByNextServer(res.data.token);
       toast.success(res.message);
       reset();
-      router.push('/');
+      router.push(paths.auth.signIn);
     },
     onError: (err) => {
-      toast.error(err.message);
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      toast.error(err?.response?.data?.message);
     },
   });
 
@@ -39,7 +38,7 @@ export default function ForgotPasswordView(): React.JSX.Element {
   } = useForm();
 
   const onSubmit = (data: FieldValues) => {
-    mutate(data as ISignInParams);
+    mutate(data.email as string);
   };
 
   return (
@@ -73,7 +72,7 @@ export default function ForgotPasswordView(): React.JSX.Element {
                 </Typography>
                 <Box mt={2}>
                   <Button variant="contained" fullWidth size="large" color="info" type="submit" disabled={isPending}>
-                    Đăng nhập
+                    Quên mật khẩu
                   </Button>
                   <Button href={paths.auth.signIn} fullWidth color="info" sx={{ marginTop: 1 }}>
                     Trở lại
