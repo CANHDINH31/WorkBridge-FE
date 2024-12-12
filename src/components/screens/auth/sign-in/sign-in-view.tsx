@@ -34,7 +34,9 @@ export default function SignInView(): React.JSX.Element {
       router.push('/');
     },
     onError: (err) => {
-      toast.error(err.message);
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      toast.error(err?.response?.data?.message);
     },
   });
 
@@ -106,6 +108,8 @@ export default function SignInView(): React.JSX.Element {
                         message: 'Password must be at least 6 characters',
                       },
                     })}
+                    error={Boolean(errors.password)}
+                    helperText={errors?.password?.message?.toString()}
                   />
                 </Box>
                 <Button

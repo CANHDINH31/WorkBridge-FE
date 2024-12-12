@@ -54,7 +54,9 @@ export default function SignUpView(): React.JSX.Element {
       router.push('/auth/sign-in');
     },
     onError: (err) => {
-      toast.error(err.message);
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      toast.error(err?.response?.data?.message);
     },
   });
 
