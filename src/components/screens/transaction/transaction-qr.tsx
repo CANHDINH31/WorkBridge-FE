@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import * as CopyToClipboard from 'react-copy-to-clipboard';
 import QRCode from 'react-qr-code';
 
 import { text } from '@/styles/theme/colors';
@@ -61,6 +61,7 @@ export default function TransactionQr({ id }: Props) {
               {url}
             </Typography>
           </Link>
+          {/* @ts-ignore */}
           <CopyToClipboard
             text={url}
             onCopy={() => {
