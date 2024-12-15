@@ -1,6 +1,7 @@
 import type { PaletteRange } from '@mui/material/styles/createPalette';
 
 export const primary = '#007456';
+export const text = 'rgba(37, 33, 59, 0.87)';
 
 export const green = {
   50: '#dff1ed',

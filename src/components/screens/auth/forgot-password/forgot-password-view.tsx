@@ -17,15 +17,25 @@ export default function ForgotPasswordView(): React.JSX.Element {
   const { mutate, isPending } = useMutation({
     mutationFn: authService.forgotPassword,
     onSuccess: async (res) => {
+<<<<<<< HEAD
       console.log(res);
+=======
+>>>>>>> a5decaeef4503245b7a1d9d59cbf7543df2a4a83
       toast.success(res.message);
       reset();
       router.push(paths.auth.signIn);
     },
+<<<<<<< HEAD
     onError: (err: any) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       toast.error(err.response.data.message);
       reset();
+=======
+    onError: (err) => {
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      toast.error(err?.response?.data?.message);
+>>>>>>> a5decaeef4503245b7a1d9d59cbf7543df2a4a83
     },
   });
 
@@ -37,7 +47,11 @@ export default function ForgotPasswordView(): React.JSX.Element {
   } = useForm();
 
   const onSubmit = (data: FieldValues) => {
+<<<<<<< HEAD
     mutate(data as { email: string });
+=======
+    mutate(data.email as string);
+>>>>>>> a5decaeef4503245b7a1d9d59cbf7543df2a4a83
   };
 
   return (
@@ -71,7 +85,11 @@ export default function ForgotPasswordView(): React.JSX.Element {
                 </Typography>
                 <Box mt={2}>
                   <Button variant="contained" fullWidth size="large" color="info" type="submit" disabled={isPending}>
+<<<<<<< HEAD
                     Tiếp theo
+=======
+                    Quên mật khẩu
+>>>>>>> a5decaeef4503245b7a1d9d59cbf7543df2a4a83
                   </Button>
                   <Button href={paths.auth.signIn} fullWidth color="info" sx={{ marginTop: 1 }}>
                     Trở lại

@@ -33,9 +33,16 @@ export default function SignInView(): React.JSX.Element {
       reset();
       router.push('/');
     },
+<<<<<<< HEAD
     onError: (err: any) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       toast.error(err.response.data.message);
+=======
+    onError: (err) => {
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      toast.error(err?.response?.data?.message);
+>>>>>>> a5decaeef4503245b7a1d9d59cbf7543df2a4a83
     },
   });
 

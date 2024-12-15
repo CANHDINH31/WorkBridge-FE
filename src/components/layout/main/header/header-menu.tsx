@@ -10,6 +10,8 @@ import { paths } from '@/paths';
 import { authService } from '@/lib/api';
 import { primary } from '@/styles/theme/colors';
 
+import HeaderInfo from './Info';
+
 interface IMenuItem {
   icon?: React.ElementType;
   title: string;
@@ -82,20 +84,7 @@ function HeaderMenu() {
           </Box>
         ))}
         {session.data?.user?.email ? (
-          <Box
-            onClick={handleSignOut}
-            width={32}
-            height={32}
-            sx={{ borderRadius: '50%', cursor: 'pointer' }}
-            bgcolor={primary}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            color="white"
-            fontWeight={600}
-          >
-            {session.data?.user?.email?.charAt(0)?.toUpperCase()}
-          </Box>
+          <HeaderInfo signOut={handleSignOut} character={session.data?.user?.email?.charAt(0)?.toUpperCase()} />
         ) : (
           <Button
             variant="outlined"
