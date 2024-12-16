@@ -39,11 +39,7 @@ class AuthService {
     }
   };
 
-<<<<<<< HEAD
-  public forgotPassword = async ({ email }: { email: string }): Promise<ISignInResponse> => {
-=======
   public forgotPassword = async (email: string): Promise<ISignInResponse> => {
->>>>>>> a5decaeef4503245b7a1d9d59cbf7543df2a4a83
     try {
       const rs = await request.post('/auth/forgot-password', { email });
       return Promise.resolve(rs.data);
