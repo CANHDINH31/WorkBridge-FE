@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Box,
   Chip,
@@ -16,7 +17,6 @@ import dayjs from 'dayjs';
 
 import TransactionFilter from '../_components/transaction-filter';
 
-
 const rows = [
   {
     id: 13070433,
@@ -32,14 +32,21 @@ const rows = [
     role: 'Buyer',
     status: (
       <Stack direction="column" justifyContent="start" alignItems="end" spacing={1}>
-        <Chip label="● Awaiting Agreement" style={{backgroundColor: '#fff1a8', display: "flex", justifyContent: "end", padding: 12}}/>
-        <Chip label="● Requires Seller's Action" style={{backgroundColor: '#ebebeb', display: "flex", justifyContent: "end", padding: 12}}/>
+        <Chip
+          label="● Awaiting Agreement"
+          style={{ backgroundColor: '#fff1a8', display: 'flex', justifyContent: 'end', padding: 12 }}
+        />
+        <Chip
+          label="● Requires Seller's Action"
+          style={{ backgroundColor: '#ebebeb', display: 'flex', justifyContent: 'end', padding: 12 }}
+        />
       </Stack>
     ),
   },
 ];
 
 export default function AllTab() {
+  const router = useRouter();
   return (
     <Box bgcolor="white" borderRadius="8px" width="100%" boxShadow={12}>
       <TransactionFilter
@@ -64,18 +71,27 @@ export default function AllTab() {
               }}
             >
               <TableCell sx={{ width: '120px' }}>ID</TableCell>
-              <TableCell sx={{ minWidth: '280px' }} align="left">TRANSACTION TYPE</TableCell>
+              <TableCell sx={{ minWidth: '280px' }} align="left">
+                TRANSACTION TYPE
+              </TableCell>
               <TableCell align="left">CREATED</TableCell>
               <TableCell align="left">AMOUNT</TableCell>
               <TableCell align="left">ROLE</TableCell>
-              <TableCell align="right">
-                STATUS
-              </TableCell>
+              <TableCell align="right">STATUS</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0} }}>
+              <TableRow
+                key={row.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 }, ':hover': {
+                  backgroundColor: '#f5f5f5',
+                  cursor: 'pointer',
+                } }}
+                onClick={() => {
+                  router.push(`/transaction/${row.id}`);
+                }}
+              >
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
@@ -89,14 +105,22 @@ export default function AllTab() {
                     </Typography>
                   </Stack>
                 </TableCell>
-                <TableCell sx={{fontWeight: "600"}} align="left">{row.created}</TableCell>
+                <TableCell sx={{ fontWeight: '600' }} align="left">
+                  {row.created}
+                </TableCell>
                 <TableCell align="left">
                   <Stack>
-                    <Typography fontWeight={600} fontSize={14}>$ {row.amount.value}</Typography>
-                    <Typography fontWeight={400} fontSize={12}>{row.amount.unit}</Typography>
+                    <Typography fontWeight={600} fontSize={14}>
+                      $ {row.amount.value}
+                    </Typography>
+                    <Typography fontWeight={400} fontSize={12}>
+                      {row.amount.unit}
+                    </Typography>
                   </Stack>
                 </TableCell>
-                <TableCell sx={{fontWeight: "600"}} align="left">{row.role}</TableCell>
+                <TableCell sx={{ fontWeight: '600' }} align="left">
+                  {row.role}
+                </TableCell>
                 <TableCell align="left">{row.status}</TableCell>
               </TableRow>
             ))}
