@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Box, Button, Collapse, Divider, Paper, Typography } from '@mui/material';
 
 import { primary } from '@/styles/theme/colors';
+import Link from 'next/link';
+import { paths } from '@/paths';
 
 interface Props {
   signOut: () => void;
@@ -41,6 +43,11 @@ function HeaderInfo({ signOut, character }: Props) {
           </Typography>
           <Typography fontSize={12} mt={1}>
             Language
+          </Typography>
+          <Typography fontSize={12} mt={1}>
+            <Link href={paths.transactions}>
+            My transactions
+            </Link>
           </Typography>
           <Box my={2}>
             <Divider />

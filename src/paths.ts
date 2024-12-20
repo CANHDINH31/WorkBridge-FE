@@ -7,6 +7,7 @@ export const paths = {
     forgotPassword: '/auth/forgot-password',
   },
   transaction: '/transaction',
+  transactions: '/transactions',
   dashboard: {},
   errors: { notFound: '/errors/not-found' },
 } as const;
